@@ -1,0 +1,128 @@
+drop table if exists students;
+drop table if exists teachers;
+drop table if exists courses;
+drop table if exists choose_records;
+drop table if exists course_types;
+drop table if exists actions;
+drop table if exists grades;
+drop table if exists majors;
+
+CREATE TABLE IF NOT EXISTS students (
+    id INT PRIMARY KEY,
+    name VARCHAR(45),
+    email VARCHAR(60),
+    password VARCHAR(45),
+	grade_id INT,
+    major_id INT,
+	FOREIGN KEY (grade_id) REFERENCES grades(id),
+    FOREIGN KEY (major_id) REFERENCES majors(id)
+);
+
+CREATE TABLE IF NOT EXISTS teachers (
+    id INT PRIMARY KEY,
+    name VARCHAR(45),
+	email VARCHAR(60),
+    password VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS courses (
+    id INT PRIMARY KEY,
+    subject VARCHAR(45),
+    teacher_id INT,
+    course_type_id INT,
+    place VARCHAR(45),
+    time VARCHAR(60),
+    quota INT,
+    credits INT,
+    remark VARCHAR(200),
+    FOREIGN KEY (teacher_id) REFERENCES teachers(id),
+    FOREIGN KEY (course_type_id) REFERENCES course_types(id)
+);
+
+CREATE TABLE IF NOT EXISTS choose_records (
+    id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    credits INT,
+    choose_time TIMESTAMP,
+    action_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(id),
+    FOREIGN KEY (course_id) REFERENCES courses(id),
+	FOREIGN KEY (action_id) REFERENCES actions(id)
+);
+
+CREATE TABLE IF NOT EXISTS course_types (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS actions (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS grades (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS majors (
+    id INT PRIMARY KEY,
+    name VARCHAR(45)
+);
+
+
+INSERT INTO grades (id, description) VALUES (1, 'Freshman');
+INSERT INTO grades (id, description) VALUES (2, 'Sophomore');
+INSERT INTO grades (id, description) VALUES (3, 'Junior');
+INSERT INTO grades (id, description) VALUES (4, 'Senior');
+
+
+INSERT INTO majors (id, name) VALUES (1, 'Computer Science');
+INSERT INTO majors (id, name) VALUES (2, 'Mathematics');
+INSERT INTO majors (id, name) VALUES (3, 'Physics');
+INSERT INTO majors (id, name) VALUES (4, 'Chemistry');
+
+
+INSERT INTO course_types (id, description) VALUES (1, 'Major');
+INSERT INTO course_types (id, description) VALUES (2, 'Non-Major');
+
+
+INSERT INTO actions (id, description) VALUES (1, 'Enroll');
+INSERT INTO actions (id, description) VALUES (2, 'Drop');
+
+
+INSERT INTO students (id, name, email, password, grade_id, major_id) VALUES (1, 'Alice', 'alice@gmail.com', 'password123', 1, 1);
+INSERT INTO students (id, name, email, password, grade_id, major_id) VALUES (2, 'Dennis', 'dennis@gmail.com', 'password123', 2, 2);
+INSERT INTO students (id, name, email, password, grade_id, major_id) VALUES (3, 'Emily', 'emily@gmail.com', 'password123', 3, 3);
+INSERT INTO students (id, name, email, password, grade_id, major_id) VALUES (4, 'Frank', 'frank@gmail.com', 'password123', 4, 4);
+
+
+INSERT INTO teachers (id, name, email, password) VALUES (1, 'Dr. Allen', 'allen@gmail.com', 'password123');
+INSERT INTO teachers (id, name, email, password) VALUES (2, 'Dr. Johnson', 'johnson@gmail.com', 'password123');
+INSERT INTO teachers (id, name, email, password) VALUES (3, 'Dr. Smith', 'smith@gmail.com', 'password123');
+INSERT INTO teachers (id, name, email, password) VALUES (4, 'Dr. Brown', 'brown@gmail.com', 'password123');
+INSERT INTO teachers (id, name, email, password) VALUES (5, 'Dr. James', 'james@gmail.com', 'password123');
+INSERT INTO teachers (id, name, email, password) VALUES (6, 'Dr. Green', 'green@gmail.com', 'password123');
+
+
+
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (1, 'Introduction to Computer Science', 1, 1, 'Room 101', '(二)03-04', 40, 2, 'Required for CS majors');
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (2, 'Calculus I', 2, 1, 'Room 102', '(三)01-03', 30, 3, 'Required for Math majors');
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (3, 'Introduction to Art', 3, 2, 'Room 103', '(一)05-06', 20, 2, 'Elective course for all majors');
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (4, 'Basic Cooking', 4, 2, 'Room 104', '(四)05-06', 25, 2, 'Elective course for all majors');
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (5, 'Advanced Physics', 5, 1, 'Room 105', '(五)03-04', 35, 2, 'Required for Physics majors');
+INSERT INTO courses (id, subject, teacher_id, course_type_id, place, time, quota, credits, remark) VALUES (6, 'Organic Chemistry', 6, 1, 'Room 106', '(一)06-08', 30, 3, 'Required for Chemistry majors');
+
+
+
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (1, 1, 1, 2, '2024-01-15 08:00:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (2, 2, 2, 3, '2024-01-15 08:10:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (3, 1, 3, 2, '2024-01-16 09:00:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (4, 2, 4, 2, '2024-01-16 09:15:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (5, 3, 3, 2, '2024-01-17 10:00:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (6, 3, 4, 2, '2024-01-17 10:30:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (7, 4, 4, 2, '2024-01-18 11:00:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (8, 4, 3, 2, '2024-01-18 11:30:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (9, 3, 5, 2, '2024-01-19 10:00:00', 1);
+INSERT INTO choose_records (id, student_id, course_id, credits, choose_time, action_id) VALUES (10, 4, 6, 3, '2024-01-19 10:30:00', 1);
