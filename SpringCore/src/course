@@ -7,6 +7,28 @@ drop table if exists actions;
 drop table if exists grades;
 drop table if exists majors;
 
+
+CREATE TABLE IF NOT EXISTS course_types (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS actions (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS grades (
+    id INT PRIMARY KEY,
+    description VARCHAR(45)
+);
+
+CREATE TABLE IF NOT EXISTS majors (
+    id INT PRIMARY KEY,
+    name VARCHAR(45)
+);
+
+
 CREATE TABLE IF NOT EXISTS students (
     id INT PRIMARY KEY,
     name VARCHAR(45),
@@ -51,25 +73,6 @@ CREATE TABLE IF NOT EXISTS choose_records (
 	FOREIGN KEY (action_id) REFERENCES actions(id)
 );
 
-CREATE TABLE IF NOT EXISTS course_types (
-    id INT PRIMARY KEY,
-    description VARCHAR(45)
-);
-
-CREATE TABLE IF NOT EXISTS actions (
-    id INT PRIMARY KEY,
-    description VARCHAR(45)
-);
-
-CREATE TABLE IF NOT EXISTS grades (
-    id INT PRIMARY KEY,
-    description VARCHAR(45)
-);
-
-CREATE TABLE IF NOT EXISTS majors (
-    id INT PRIMARY KEY,
-    name VARCHAR(45)
-);
 
 
 INSERT INTO grades (id, description) VALUES (1, 'Freshman');
